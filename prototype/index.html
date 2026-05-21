@@ -311,7 +311,7 @@ body {
 /* ── Photo Grid ── */
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 2px;
   padding: 2px;
   padding-bottom: calc(64px + var(--safe-bottom));
@@ -365,10 +365,12 @@ body {
   .photo-card:hover .card-info-overlay { opacity: 1; transform: translateY(0); }
 }
 .photo-card img {
-  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease, filter 0.6s ease;
   opacity: 0;
+  filter: blur(16px);
+  transform: scale(1.08);
 }
-.photo-card:has(img[src]) img { opacity: 1; }
+.photo-card:has(img[src]) img { opacity: 1; filter: blur(0); transform: scale(1); }
 .photo-card .card-info-overlay {
   position: absolute;
   bottom: 0;
@@ -397,7 +399,7 @@ body {
 }
 .card-info-overlay .cio-name { font-weight: 500; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .card-info-overlay .cio-meta { font-size: 9px; opacity: 0.7; margin-top: 1px; }
-.photo-card.stagger-in { animation: cardStaggerIn 0.2s var(--md-motion-easing-emphasized) both; }
+.photo-card.stagger-in { animation: cardStaggerIn 0.3s cubic-bezier(0.2,0,0,1) both; will-change: transform, opacity; }
 .photo-card.hidden { display: none; }
 .photo-card.selected {
   outline: 3px solid var(--primary);
@@ -495,6 +497,7 @@ body {
 
 @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
 @keyframes viewFadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes cardStaggerIn { from{opacity:0;transform:scale(0.92) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
 @keyframes viewSlideIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
 @keyframes viewSlideOut { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
 @keyframes viewScaleIn { from{opacity:0;transform:scale(0.94)} to{opacity:1;transform:scale(1)} }
@@ -1276,7 +1279,7 @@ body {
   padding: 10px 12px 8px;
   z-index: 2;
 }
-.timeline-row { display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 2px; }
+.timeline-row { display:grid;grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));gap:2px;padding:0 2px; }
 .timeline-row .photo-card { padding-bottom:100%; }
 
 /* ── Category View ── */
@@ -1338,7 +1341,7 @@ body {
 .fav-back:active { background:var(--surface-variant); }
 .fav-title { font-size:18px;font-weight:500;color:var(--on-surface); }
 .fav-count { font-size:13px;color:var(--on-surface-variant);margin-left:auto; }
-.fav-grid { flex:1;overflow-y:auto;padding:4px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;align-content:start; }
+.fav-grid { flex:1;overflow-y:auto;padding:4px;display:grid;grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));gap:2px;align-content:start; }
 .fav-empty { display:none;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--on-surface-variant);gap:8px; }
 .fav-empty.show { display:flex; }
 .fav-empty svg { opacity:0.4; }
@@ -1361,7 +1364,7 @@ body {
 .people-num { font-size:10px;color:var(--on-surface-variant); }
 .people-detail { display:none;flex-direction:column;height:100%; }
 .people-detail.active { display:flex; }
-.people-detail-grid { flex:1;overflow-y:auto;padding:4px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;align-content:start; }
+.people-detail-grid { flex:1;overflow-y:auto;padding:4px;display:grid;grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));gap:2px;align-content:start; }
 
 .memory-card { display:none;background:var(--surface-container-high);border-radius:var(--md-shape-lg);margin:8px 16px;overflow:hidden;cursor:pointer; }
 .memory-card.show { display:block;animation:viewFadeIn 0.4s var(--md-motion-easing-emphasized); }
@@ -1449,7 +1452,7 @@ body {
 .trash-title { font-size:18px;font-weight:500;color:var(--on-surface); }
 .trash-clear-all { padding:6px 16px;border-radius:var(--md-shape-full);background:var(--error-container);color:var(--error);border:none;font-size:13px;cursor:pointer;font-weight:500;transition:background 0.15s; }
 .trash-clear-all:active { background:var(--error);color:var(--on-error); }
-.trash-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:4px; }
+.trash-grid { display:grid;grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));gap:4px; }
 .trash-card { position:relative;padding-bottom:100%;border-radius:var(--md-shape-xs);overflow:hidden;background:var(--surface-container);cursor:pointer; }
 .trash-card img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5; }
 .trash-card .trash-overlay { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(0,0,0,0.3);opacity:0;transition:opacity 0.2s; }
@@ -1491,7 +1494,7 @@ body {
 .album-detail-add, .album-detail-del { background:none;border:none;color:var(--on-surface-variant);cursor:pointer;padding:8px;border-radius:50%;display:flex; }
 .album-detail-add:active, .album-detail-del:active { background:var(--surface-variant); }
 .album-detail-del { color:var(--error); }
-.album-detail-grid { flex:1;overflow-y:auto;padding:4px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;align-content:start; }
+.album-detail-grid { flex:1;overflow-y:auto;padding:4px;display:grid;grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));gap:4px;align-content:start; }
 .album-detail-grid .photo-card.dragging { opacity:0.4;transform:scale(0.9); }
 .album-detail-grid .photo-card.drag-over { outline:2px dashed var(--primary);outline-offset:-2px; }
 .album-detail-empty { display:none;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--on-surface-variant);font-size:14px; }
@@ -1758,6 +1761,12 @@ body {
   .modal-sheet::before { display: none; }
   .cat-grid { grid-template-columns: repeat(3,1fr); }
 }
+
+/* ── Dark mode enhancements ── */
+@media (prefers-color-scheme: dark) {
+  .photo-card { box-shadow: 0 1px 4px rgba(0,0,0,0.35); }
+}
+.photo-card { will-change: transform, opacity; }
 .memory-card { display:none; margin:4px 16px; background:var(--surface-container-high); border-radius:var(--md-shape-lg); overflow:hidden; animation:viewFadeIn 0.3s var(--md-motion-easing-decelerated); }
 .memory-card.show { display:block; }
 .memory-header { display:flex; align-items:center; padding:10px 14px; gap:8px; }
@@ -1825,7 +1834,7 @@ body {
 .hidden-back:hover { background:rgba(var(--primary-rgb),0.08); }
 .hidden-title { font-size:18px; font-weight:500; }
 .hidden-count { font-size:13px; color:var(--on-surface-variant); margin-left:auto; }
-.hidden-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; padding:4px; overflow-y:auto; flex:1; }
+.hidden-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:4px; padding:4px; overflow-y:auto; flex:1; }
 .hidden-empty { display:none; flex-direction:column; align-items:center; justify-content:center; flex:1; color:var(--on-surface-variant); text-align:center; padding:40px 20px; }
 .hidden-empty.show { display:flex; }
 .photo-card.is-hidden { opacity:0.4; }
@@ -4186,10 +4195,8 @@ function renderGrid() {
     grid.style.display = 'none';
   } else {
     grid.style.display = 'grid';
-    const BATCH_SIZE = 60;
-    let renderedCount = 0;
 
-    // 预计算日期分组 (O(n) 替代 O(n²))
+    // Build layout items (date headers + photos)
     const dateGroupCounts = {};
     filtered.forEach(p => { dateGroupCounts[p.date] = (dateGroupCounts[p.date] || 0) + 1; });
     const todayStr = new Date().toISOString().slice(0,10);
@@ -4200,172 +4207,185 @@ function renderGrid() {
       if (dateGroup === todayStr) return '今天';
       if (dateGroup === yesterdayStr) return '昨天';
       const d = new Date(dateGroup);
-      return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+      return d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
     }
 
-    // 持久化 IntersectionObserver，只 observe 新卡片
+    // Build ordered layout items
+    const layoutItems = [];
+    let lastDate = null;
+    filtered.forEach((p, idx) => {
+      if (p.date !== lastDate) {
+        layoutItems.push({ type: 'header', date: p.date, count: dateGroupCounts[p.date], label: formatDateLabel(p.date) });
+        lastDate = p.date;
+      }
+      layoutItems.push({ type: 'photo', photo: p, idx });
+    });
+
+    const BUFFER_ROWS = 3;
+    const cardPool = new Map();
+    const headerPool = new Map();
+
     if (window._gridObserver) window._gridObserver.disconnect();
     window._gridObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target.querySelector('img[data-src]');
-          if (img) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-          }
+          if (img) { img.src = img.dataset.src; img.removeAttribute('data-src'); }
           window._gridObserver.unobserve(entry.target);
         }
       });
-    }, { rootMargin: '300px' });
+    }, { rootMargin: '400px' });
 
-    function renderBatch(startIdx) {
-      const endIdx = Math.min(startIdx + BATCH_SIZE, filtered.length);
-      const fragment = document.createDocumentFragment();
-      const newCards = [];
+    function createCard(p) {
+      const card = document.createElement('div');
+      card.className = 'photo-card' + (p.aiTags ? ' ai-tagged' : '') + (selectMode ? ' select-mode' : '') + (p.isFavorite ? ' is-fav' : '');
+      if (p.isDuplicate) card.style.outline = '2px solid #ff3b30';
+      if (selectedPhotos.has(p.id)) card.classList.add('selected');
+      card.style.background = p.color;
+      const editTransform = [];
+      if (p._editRotation) editTransform.push('rotate(' + p._editRotation + 'deg)');
+      if (p._editFlipH) editTransform.push('scaleX(-1)');
+      const editFilter = [];
+      if (p._editBrightness && p._editBrightness !== 100) editFilter.push('brightness(' + p._editBrightness + '%)');
+      if (p._editContrast && p._editContrast !== 100) editFilter.push('contrast(' + p._editContrast + '%)');
+      if (p._editSaturate && p._editSaturate !== 100) editFilter.push('saturate(' + p._editSaturate + '%)');
+      const es = (editTransform.length ? 'transform:' + editTransform.join(' ') + ';' : '') + (editFilter.length ? 'filter:' + editFilter.join(' ') + ';' : '');
+      card.innerHTML = '<div class="swipe-bg delete">🗑️</div>' +
+        '<div class="swipe-bg fav">❤️</div>' +
+        '<img data-src="' + p.img + '" alt="' + p.filename + '"' + (es ? ' style="' + es + '"' : '') + '>' +
+        '<div class="ai-dot"></div><div class="check-mark">✓</div>' +
+        '<span class="fav-badge">❤️</span><span class="pin-badge">📌</span>' +
+        '<div class="card-info-overlay"><div class="cio-name">' + p.filename + '</div><div class="cio-meta">' + p.date + ' · ' + p.location + '</div></div>';
+      card.dataset.photoId = p.id;
+      if (p.pinned) card.classList.add('is-pinned');
+      attachSwipe(card, p);
 
-      for (let idx = startIdx; idx < endIdx; idx++) {
-        const p = filtered[idx];
-        const dateGroup = p.date;
-        if (idx === startIdx || filtered[idx - 1].date !== dateGroup) {
-          const header = document.createElement('div');
-          header.className = 'date-group-header';
-          header.innerHTML = `<span class="date-label">${formatDateLabel(dateGroup)}</span><span class="date-line"></span><span class="date-count">${dateGroupCounts[dateGroup]} 张</span>`;
-          fragment.appendChild(header);
-        }
-        const card = document.createElement('div');
-        card.className = 'photo-card' + (p.aiTags ? ' ai-tagged' : '') + (selectMode ? ' select-mode' : '') + (p.isFavorite ? ' is-fav' : '');
-        if (p.isDuplicate) card.style.outline = '2px solid #ff3b30';
-        if (selectedPhotos.has(p.id)) card.classList.add('selected');
-        card.style.background = p.color;
-        const editTransform = [];
-        if (p._editRotation) editTransform.push(`rotate(${p._editRotation}deg)`);
-        if (p._editFlipH) editTransform.push('scaleX(-1)');
-        const editFilter = [];
-        if (p._editBrightness && p._editBrightness !== 100) editFilter.push(`brightness(${p._editBrightness}%)`);
-        if (p._editContrast && p._editContrast !== 100) editFilter.push(`contrast(${p._editContrast}%)`);
-        if (p._editSaturate && p._editSaturate !== 100) editFilter.push(`saturate(${p._editSaturate}%)`);
-        const editStyle = (editTransform.length ? `transform:${editTransform.join(' ')};` : '') + (editFilter.length ? `filter:${editFilter.join(' ')};` : '');
-        card.innerHTML = `
-          <div class="swipe-bg delete">🗑</div>
-          <div class="swipe-bg fav">❤️</div>
-          <img data-src="${p.img}" alt="${p.filename}"${editStyle ? ` style="${editStyle}"` : ''}>
-          <div class="ai-dot"></div>
-          <div class="check-mark">✓</div>
-          <span class="fav-badge">❤️</span>
-          <span class="pin-badge">📌</span>
-          <div class="card-info-overlay"><div class="cio-name">${p.filename}</div><div class="cio-meta">${p.date} · ${p.location}</div></div>
-        `;
-        card.dataset.photoId = p.id;
-        if (p.pinned) card.classList.add('is-pinned');
-        attachSwipe(card, p);
-        card.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (longPressTriggered) { longPressTriggered = false; hidePeek(); return; }
-          if (selectMode) { toggleSelect(p.id, card); }
-          else { openLightbox(p, filtered, card); }
-        });
-        let longPressTimer;
-        let peekTimer;
-        let longPressTriggered = false;
-        let pointerStartX = 0;
-        let pointerStartY = 0;
-        const showPeek = () => {
-          const peekOverlay = document.getElementById('peekOverlay');
-          document.getElementById('peekImg').src = p.img;
-          document.getElementById('peekEmoji').textContent = p.emoji;
-          document.getElementById('peekName').textContent = p.filename;
-          document.getElementById('peekMeta').textContent = `${p.date} · ${p.location}`;
-          peekOverlay.classList.add('show');
-        };
-        const cancelPeek = () => {
-          clearTimeout(peekTimer);
-          hidePeek();
-        };
-        card.addEventListener('touchstart', (e) => {
-          longPressTriggered = false;
-          pointerStartX = e.touches[0].clientX;
-          pointerStartY = e.touches[0].clientY;
-          peekTimer = setTimeout(showPeek, 300);
-          longPressTimer = setTimeout(() => {
-            cancelPeek();
-            longPressTriggered = true;
-            if (navigator.vibrate) navigator.vibrate(10);
-            enterSelectMode(p.id, card);
-          }, 500);
-        }, { passive: true });
-        card.addEventListener('touchmove', (e) => {
-          if (Math.abs(e.touches[0].clientX - pointerStartX) > 20 || Math.abs(e.touches[0].clientY - pointerStartY) > 20) {
-            clearTimeout(longPressTimer);
-            cancelPeek();
-          }
-        }, { passive: true });
-        card.addEventListener('touchend', () => { clearTimeout(longPressTimer); cancelPeek(); });
-        card.addEventListener('touchcancel', () => { clearTimeout(longPressTimer); cancelPeek(); });
-        card.addEventListener('contextmenu', (e) => {
-          e.preventDefault();
-          showCtxMenu(e, p);
-        });
-        card.draggable = true;
-        card.addEventListener('dragstart', e => {
-          e.dataTransfer.setData('text/plain', p.id.toString());
-          e.dataTransfer.effectAllowed = 'copy';
-          card.style.opacity = '0.5';
-        });
-        card.addEventListener('dragend', () => {
-          card.style.opacity = '';
-          document.querySelectorAll('.filter-chip.drag-over-album').forEach(c => c.classList.remove('drag-over-album'));
-        });
-        card.addEventListener('pointerdown', () => {
-          longPressTriggered = false;
-          longPressTimer = setTimeout(() => {
-            longPressTriggered = true;
-            if (navigator.vibrate) navigator.vibrate(10);
-            enterSelectMode(p.id, card);
-          }, 500);
-        });
-        card.addEventListener('pointermove', (e) => {
-          if (Math.abs(e.clientX - pointerStartX) > 20 || Math.abs(e.clientY - pointerStartY) > 20) {
-            clearTimeout(longPressTimer);
-          }
-        });
-        card.addEventListener('pointerup', () => { clearTimeout(longPressTimer); });
-        card.addEventListener('pointercancel', () => { clearTimeout(longPressTimer); });
-        fragment.appendChild(card);
-        newCards.push(card);
-      }
-
-      grid.appendChild(fragment);
-      renderedCount = endIdx;
-
-      // 只 observe 新添加的卡片
-      newCards.forEach(c => window._gridObserver.observe(c));
-
-      // 第一批不加动画，后续批次有轻量入场
-      if (startIdx > 0) {
-        newCards.forEach((c, i) => {
-          c.classList.add('stagger-in');
-          c.style.animationDelay = Math.min(i * 8, 200) + 'ms';
-        });
-      }
-    }
-
-    renderBatch(0);
-
-    if (filtered.length > BATCH_SIZE) {
-      const scrollHandler = () => {
-        const scrollPos = grid.scrollTop + grid.clientHeight;
-        const totalHeight = grid.scrollHeight;
-        if (scrollPos > totalHeight * 0.8 && renderedCount < filtered.length) {
-          renderBatch(renderedCount);
-        }
+      let longPressTimer, peekTimer, longPressTriggered = false;
+      let cX = 0, cY = 0;
+      const showPeek = () => {
+        document.getElementById('peekImg').src = p.img;
+        document.getElementById('peekEmoji').textContent = p.emoji;
+        document.getElementById('peekName').textContent = p.filename;
+        document.getElementById('peekMeta').textContent = p.date + ' · ' + p.location;
+        document.getElementById('peekOverlay').classList.add('show');
       };
-      grid.removeEventListener('scroll', grid._scrollHandler);
-      grid._scrollHandler = scrollHandler;
-      grid.addEventListener('scroll', scrollHandler, { passive: true });
+      const cancelPeek = () => { clearTimeout(peekTimer); hidePeek(); };
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (longPressTriggered) { longPressTriggered = false; hidePeek(); return; }
+        if (selectMode) { toggleSelect(p.id, card); } else { openLightbox(p, filtered, card); }
+      });
+      card.addEventListener('touchstart', (e) => {
+        longPressTriggered = false; cX = e.touches[0].clientX; cY = e.touches[0].clientY;
+        peekTimer = setTimeout(showPeek, 300);
+        longPressTimer = setTimeout(() => { cancelPeek(); longPressTriggered = true; if (navigator.vibrate) navigator.vibrate(10); enterSelectMode(p.id, card); }, 500);
+      }, { passive: true });
+      card.addEventListener('touchmove', (e) => {
+        if (Math.abs(e.touches[0].clientX - cX) > 20 || Math.abs(e.touches[0].clientY - cY) > 20) { clearTimeout(longPressTimer); cancelPeek(); }
+      }, { passive: true });
+      card.addEventListener('touchend', () => { clearTimeout(longPressTimer); cancelPeek(); });
+      card.addEventListener('touchcancel', () => { clearTimeout(longPressTimer); cancelPeek(); });
+      card.addEventListener('contextmenu', (e) => { e.preventDefault(); showCtxMenu(e, p); });
+      card.draggable = true;
+      card.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', p.id.toString()); e.dataTransfer.effectAllowed = 'copy'; card.style.opacity = '0.5'; });
+      card.addEventListener('dragend', () => { card.style.opacity = ''; document.querySelectorAll('.filter-chip.drag-over-album').forEach(c => c.classList.remove('drag-over-album')); });
+      card.addEventListener('pointerdown', () => { longPressTriggered = false; longPressTimer = setTimeout(() => { longPressTriggered = true; if (navigator.vibrate) navigator.vibrate(10); enterSelectMode(p.id, card); }, 500); });
+      card.addEventListener('pointerup', () => { clearTimeout(longPressTimer); });
+      card.addEventListener('pointercancel', () => { clearTimeout(longPressTimer); });
+      return card;
     }
+
+    function virtualRender() {
+      const containerWidth = grid.clientWidth;
+      const style = getComputedStyle(grid);
+      const gap = parseInt(style.gap) || 2;
+      const testCols = Math.round(containerWidth / (120 + gap));
+      const realCols = Math.max(1, testCols);
+      const cardWidth = (containerWidth - gap * (realCols - 1)) / realCols;
+      const rowHeight = cardWidth;
+
+      let currentRow = 0, currentCol = 0;
+      const itemPositions = [];
+      for (let i = 0; i < layoutItems.length; i++) {
+        const item = layoutItems[i];
+        if (item.type === 'header') {
+          if (currentCol > 0) { currentRow++; currentCol = 0; }
+          itemPositions.push({ item: item, row: currentRow, isHeader: true });
+          currentRow++;
+        } else {
+          if (currentCol >= realCols) { currentRow++; currentCol = 0; }
+          itemPositions.push({ item: item, row: currentRow, col: currentCol, isHeader: false });
+          currentCol++;
+        }
+      }
+      const totalRows = currentRow + (currentCol > 0 ? 1 : 0);
+      const scrollTop = grid.scrollTop;
+      const viewHeight = grid.clientHeight;
+      const startRow = Math.max(0, Math.floor(scrollTop / (rowHeight + gap)) - BUFFER_ROWS);
+      const endRow = Math.min(totalRows, Math.ceil((scrollTop + viewHeight) / (rowHeight + gap)) + BUFFER_ROWS);
+
+      const newVisibleIds = new Set();
+      const newVisibleHeaders = new Set();
+      const itemsToShow = [];
+      for (const pos of itemPositions) {
+        if (pos.row >= startRow && pos.row < endRow) {
+          if (pos.isHeader) { newVisibleHeaders.add(pos.item.date); itemsToShow.push(pos); }
+          else { newVisibleIds.add(pos.item.photo.id); itemsToShow.push(pos); }
+        }
+      }
+
+      for (const [id, el] of cardPool) { if (!newVisibleIds.has(id)) { el.remove(); cardPool.delete(id); } }
+      for (const [date, el] of headerPool) { if (!newVisibleHeaders.has(date)) { el.remove(); headerPool.delete(date); } }
+
+      const fragment = document.createDocumentFragment();
+      let addedCount = 0;
+      for (const pos of itemsToShow) {
+        if (pos.isHeader) {
+          if (!headerPool.has(pos.item.date)) {
+            const header = document.createElement('div');
+            header.className = 'date-group-header';
+            header.innerHTML = '<span class="date-label">' + pos.item.label + '</span><span class="date-line"></span><span class="date-count">' + pos.item.count + ' 张</span>';
+            headerPool.set(pos.item.date, header);
+            fragment.appendChild(header);
+          }
+        } else {
+          if (!cardPool.has(pos.item.photo.id)) {
+            const card = createCard(pos.item.photo);
+            cardPool.set(pos.item.photo.id, card);
+            fragment.appendChild(card);
+            window._gridObserver.observe(card);
+            addedCount++;
+          }
+        }
+      }
+      if (fragment.childNodes.length > 0) grid.appendChild(fragment);
+
+      if (addedCount > 0) {
+        let delay = 0;
+        for (const pos of itemsToShow) {
+          if (!pos.isHeader) {
+            const card = cardPool.get(pos.item.photo.id);
+            if (card && !card._staggerDone) {
+              card._staggerDone = true;
+              card.classList.add('stagger-in');
+              card.style.animationDelay = Math.min(delay, 150) + 'ms';
+              delay += 6;
+            }
+          }
+        }
+      }
+    }
+
+    grid.removeEventListener('scroll', grid._scrollHandler);
+    let scrollRAF = null;
+    grid._scrollHandler = () => {
+      if (scrollRAF) return;
+      scrollRAF = requestAnimationFrame(() => { virtualRender(); scrollRAF = null; });
+    };
+    grid.addEventListener('scroll', grid._scrollHandler, { passive: true });
+    virtualRender();
   }
 }
-
 // ═══════════════════════════════════
 // Select Mode
 // ═══════════════════════════════════
@@ -4844,10 +4864,18 @@ function switchView(view) {
     if (key === view) {
       el.style.display = key === 'grid' ? 'grid' : '';
       el.classList.add('active');
-      el.style.animation = 'none';
-      el.offsetHeight;
-      const animName = goingForward ? 'viewSlideIn' : 'viewSlideOut';
-      el.style.animation = `${animName} 0.3s var(--md-motion-easing-emphasized)`;
+      el.style.opacity = '0';
+      el.style.transform = goingForward ? 'translateY(16px) scale(0.98)' : 'translateY(-12px) scale(0.98)';
+      el.offsetHeight; // force reflow
+      el.style.transition = 'opacity 0.28s cubic-bezier(0.2,0,0,1), transform 0.32s cubic-bezier(0.2,0,0,1)';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0) scale(1)';
+      el.addEventListener('transitionend', function handler() {
+        el.style.transition = '';
+        el.style.opacity = '';
+        el.style.transform = '';
+        el.removeEventListener('transitionend', handler);
+      });
     } else {
       el.classList.remove('active');
       el.style.display = 'none';
