@@ -1,0 +1,37 @@
+# OpenClaw Refactor Agent Configuration
+
+agent:
+  name: "refactor-agent"
+  model: "deepseek-v4-pro"
+  max_tokens_per_task: 8000
+  temperature: 0.1
+
+scanner:
+  languages:
+    - typescript
+    - python
+    - go
+  rules:
+    - architecture_violation
+    - code_smell
+    - deprecated_api
+    - anti_pattern
+  incremental: true
+  git_diff_only: true
+
+refactor:
+  auto_generate_pr: true
+  pr_template: "templates/refactor_pr.md"
+  require_tests_pass: true
+  max_files_per_pr: 10
+
+validation:
+  test_runner: "auto-detect"
+  scope: "affected"
+  timeout: 300
+  retry_on_failure: 1
+
+reporting:
+  dashboard: true
+  weekly_digest: true
+  token_budget_daily: 5_000_000
